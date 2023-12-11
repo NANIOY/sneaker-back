@@ -1,9 +1,36 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const shoeSchema = new mongoose.Schema({
-
+const ShoeSchema = new Schema({
+    color: {
+        type: String,
+        required: true,
+    },
+    size: {
+        type: Number,
+        required: true,
+    },
+    lacesColor: {
+        type: String,
+        required: true,
+    },
+    soleColor: {
+        type: String,
+        required: true,
+    },
+    logoColor: {
+        type: String,
+        required: true,
+    },
+    pattern: {
+        type: String,
+    },
+    contactInfo: {
+        type: String,
+        required: true,
+    },
 });
 
-const Shoe = mongoose.model('Shoe', shoeSchema);
+const Shoe = mongoose.model('Shoe', ShoeSchema);
 
 module.exports = Shoe;
