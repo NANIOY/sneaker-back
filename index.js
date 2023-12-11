@@ -1,15 +1,25 @@
+require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
-const shoesRoutes = require('./routes/api/v1/shoes');
-
 const app = express();
 const port = process.env.PORT || 3000;
 
-mongoose.connect('mongodb://localhost/sneakerstore', { useNewUrlParser: true, useUnifiedTopology: true });
+const cors = require('cors');
+app.use(cors());
 
+mongoose.connect(process.env.MONGODB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+
+const shoeRoutes = require('./routes/api/v1/shoes');
 app.use(express.json());
 
-app.use('/api/v1/shoes', shoesRoutes);
+app.use('/api/v1/shoes', shoeRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
