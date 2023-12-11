@@ -102,7 +102,7 @@ const deleteShoeOrder = async (req, res) => {
     try {
         const { id } = req.params;
 
-        // Delete the shoe order
+        // delete the shoe order
         const deletedShoe = await Shoe.findByIdAndDelete(id);
 
         if (!deletedShoe) {
