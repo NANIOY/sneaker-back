@@ -23,6 +23,7 @@ const getShoeOrders = async (req, res) => {
     }
 };
 
+
 // create a new shoe order
 const createShoeOrder = async (req, res) => {
     try {
@@ -96,22 +97,12 @@ const getShoeById = async (req, res) => {
     }
 };
 
-// delete a shoe order by id (admin access required)
+// delete a shoe order by id
 const deleteShoeOrder = async (req, res) => {
     try {
         const { id } = req.params;
 
-        // check if the user is an admin
-        const isAdmin = req.user && req.user.role === 'admin';
-
-        if (!isAdmin) {
-            return res.status(403).json({
-                status: 'error',
-                message: 'Unauthorized: Only admins can delete shoe orders.',
-            });
-        }
-
-        // delete the shoe order if user is an admin
+        // Delete the shoe order
         const deletedShoe = await Shoe.findByIdAndDelete(id);
 
         if (!deletedShoe) {
