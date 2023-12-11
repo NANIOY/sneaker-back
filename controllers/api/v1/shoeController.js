@@ -1,9 +1,14 @@
 const Shoe = require('../../../models/Shoe');
 
-// get all shoe orders
+// get all shoe orders with optional sorting
 const getShoeOrders = async (req, res) => {
     try {
-        const shoeOrders = await Shoe.find();
+        const validSortOptions = ['createdAt', 'color', 'size'];
+        const sortBy = validSortOptions.includes(req.query.sortby) ? req.query.sortby : 'createdAt';
+        const sortOrder = req.query.sortorder === 'desc' ? -1 : 1;
+
+        const sortObject = { [sortBy]: sortOrder };
+        const shoeOrders = await Shoe.find().sort(sortObject);
 
         res.status(200).json({
             status: 'success',
@@ -58,6 +63,7 @@ const createShoeOrder = async (req, res) => {
     }
 };
 
+// get a shoe order by id
 const getShoeById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -65,7 +71,7 @@ const getShoeById = async (req, res) => {
         // find the shoe by id
         const shoe = await Shoe.findById(id);
 
-        //  check if the shoe exists
+        // check if the shoe exists
         if (!shoe) {
             return res.status(404).json({
                 status: 'error',
