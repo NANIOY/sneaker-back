@@ -58,7 +58,40 @@ const createShoeOrder = async (req, res) => {
     }
 };
 
+const getShoeById = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // find the shoe by id
+        const shoe = await Shoe.findById(id);
+
+        //  check if the shoe exists
+        if (!shoe) {
+            return res.status(404).json({
+                status: 'error',
+                message: 'Shoe not found',
+            });
+        }
+
+        // return the shoe details
+        res.status(200).json({
+            status: 'success',
+            message: 'Fetched shoe details successfully',
+            data: {
+                shoeDetails: shoe,
+            },
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            status: 'error',
+            message: 'Internal Server Error',
+        });
+    }
+};
+
 module.exports = {
     getShoeOrders,
     createShoeOrder,
+    getShoeById,
 };
