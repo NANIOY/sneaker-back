@@ -1,24 +1,22 @@
-const Shoe = require('../../../models/shoe.js');
+const Shoe = require('../../../models/Shoe');
 
-const addShoeOrder = async (req, res) => {
-};
+const getShoeOrders = async (req, res) => {
+    try {
+        const shoeOrders = await Shoe.find();
 
-const deleteShoeOrder = async (req, res) => {
-};
-
-const updateShoeOrder = async (req, res) => {
-};
-
-const getShoeDetails = async (req, res) => {
-};
-
-const getAllShoeOrders = async (req, res) => {
+        res.status(200).json({
+            status: 'success',
+            message: 'Fetched all shoe orders successfully',
+            data: {
+                shoeOrders,
+            },
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: 'error', message: 'Internal Server Error' });
+    }
 };
 
 module.exports = {
-    addShoeOrder,
-    deleteShoeOrder,
-    updateShoeOrder,
-    getShoeDetails,
-    getAllShoeOrders,
+    getShoeOrders,
 };
