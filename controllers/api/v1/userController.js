@@ -2,7 +2,7 @@ const User = require('../../../models/User');
 
 const createUser = async (req, res) => {
     try {
-        const { username, email, password } = req.body;
+        const { username, email, password, isAdmin } = req.body;
 
         // check if user already exists
         const existingUser = await User.findOne({ $or: [{ username }, { email }] });
@@ -11,7 +11,7 @@ const createUser = async (req, res) => {
         }
 
         // create new user
-        const newUser = new User({ username, email, password });
+        const newUser = new User({ username, email, password, isAdmin });
         await newUser.save();
         res.status(201).json({ message: 'User created successfully' });
     } catch (error) {
