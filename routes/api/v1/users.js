@@ -20,4 +20,7 @@ router.put('/password', authenticate, userController.updatePassword);
 router.patch('/info', authenticate, userController.updateUser);
 router.put('/info', authenticate, userController.updateUser);
 
+// get user details
+router.get('/profile', authenticate, userController.getUser);
+
 module.exports = router;
