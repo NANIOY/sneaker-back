@@ -148,41 +148,19 @@ const updateShoeOrder = async (req, res) => {
 
         const updates = req.body;
 
-        // if "status" is included in the updates, update only the status
+        // validate "status" if included in the updates
         if ('status' in updates) {
-            // check if the status value is valid
             const validStatusValues = ['In Production', 'Shipped', 'Delivered', 'Cancelled'];
+
             if (!validStatusValues.includes(updates.status)) {
                 return res.status(400).json({
                     status: 'error',
                     message: 'Invalid status value',
                 });
             }
-
-            // update the status
-            const updatedShoe = await Shoe.findByIdAndUpdate(
-                id,
-                { $set: { status: updates.status } },
-                { new: true }
-            );
-
-            if (!updatedShoe) {
-                return res.status(404).json({
-                    status: 'error',
-                    message: 'Shoe not found',
-                });
-            }
-
-            return res.json({
-                status: 'success',
-                message: 'Shoe order status updated successfully',
-                data: {
-                    updatedShoe,
-                },
-            });
         }
 
-        // if other fields are included in the updates, update all the fields
+        // update all fields
         const updatedShoe = await Shoe.findByIdAndUpdate(
             id,
             { $set: updates },
