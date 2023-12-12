@@ -97,7 +97,7 @@ const getShoeById = async (req, res) => {
     }
 };
 
-// delete a shoe order by id
+// delete a shoe order by id (admin access required)
 const deleteShoeOrder = async (req, res) => {
     try {
         const { id } = req.params;
@@ -133,9 +133,52 @@ const deleteShoeOrder = async (req, res) => {
     }
 };
 
+// put/patch a shoe order by id (admin access required)
+const updateShoeOrder = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // check if the user is an admin
+        if (!req.user.isAdmin) {
+            return res.status(403).json({
+                status: 'error',
+                message: 'Forbidden: Admin access required',
+            });
+        }
+
+        // find the shoe order by id and update it
+        const updatedShoe = await Shoe.findByIdAndUpdate(id, req.body, {
+            new: true,
+            runValidators: true,
+        });
+
+        if (!updatedShoe) {
+            return res.status(404).json({
+                status: 'error',
+                message: 'Shoe not found',
+            });
+        }
+
+        res.status(200).json({
+            status: 'success',
+            message: 'Shoe order updated successfully',
+            data: {
+                shoe: updatedShoe,
+            },
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            status: 'error',
+            message: 'Internal Server Error',
+        });
+    }
+};
+
 module.exports = {
     getShoeOrders,
     createShoeOrder,
     getShoeById,
     deleteShoeOrder,
+    updateShoeOrder,
 };
