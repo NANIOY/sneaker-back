@@ -87,9 +87,48 @@ const updatePassword = async (req, res) => {
     }
 };
 
+const updateUser = async (req, res) => {
+    try {
+        const { userId } = req.user;
+        const { username, email } = req.body;
+
+        // fetch the user by id
+        const user = await User.findById(userId);
+
+        // check if the updated username or email already exists for another user
+        const existingUser = await User.findOne({
+            $and: [
+                { _id: { $ne: userId } }, // exclude the current user
+                { $or: [{ username }, { email }] },
+            ],
+        });
+
+        if (existingUser) {
+            return res.status(400).json({ message: 'Username or email already exists' });
+        }
+
+        // update the username and/or email
+        if (username) {
+            user.username = username;
+        }
+        if (email) {
+            user.email = email;
+        }
+
+        // save the updated user
+        await user.save();
+
+        res.json({ message: 'User information updated successfully' });
+    } catch (error) {
+        console.error('Error updating user information:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
 module.exports = {
     createUser,
     getAllUsers,
     deleteUser,
     updatePassword,
+    updateUser,
 };
