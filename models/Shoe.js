@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// define the Shoe model schema
 const ShoeSchema = new Schema({
     color: {
         type: String,

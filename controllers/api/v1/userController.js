@@ -1,6 +1,7 @@
 const User = require('../../../models/User');
 const bcrypt = require('bcrypt');
 
+// create new user
 const createUser = async (req, res) => {
     try {
         const { username, email, password, isAdmin } = req.body;
@@ -25,6 +26,7 @@ const createUser = async (req, res) => {
     }
 };
 
+// get all users
 const getAllUsers = async (req, res) => {
     try {
         const users = await User.find();
@@ -35,6 +37,7 @@ const getAllUsers = async (req, res) => {
     }
 };
 
+// delete user (admin only)
 const deleteUser = async (req, res) => {
     try {
         const { userId } = req.params;
@@ -58,6 +61,7 @@ const deleteUser = async (req, res) => {
     }
 };
 
+// update user password
 const updatePassword = async (req, res) => {
     try {
         const { userId } = req.user;
@@ -87,6 +91,7 @@ const updatePassword = async (req, res) => {
     }
 };
 
+// update user details
 const updateUser = async (req, res) => {
     try {
         const { userId } = req.user;

@@ -15,10 +15,8 @@ router.get('/:id', shoeController.getShoeById);
 // DELETE a shoe order by id (admin access required)
 router.delete('/:id', authenticate, shoeController.deleteShoeOrder);
 
-// PUT a shoe order by id (admin access required)
+// PUT/PATCH a shoe order by id (admin access required)
 router.put('/:id', authenticate, shoeController.updateShoeOrder);
-
-// PATCH a shoe order by id (admin access required)
 router.patch('/:id', authenticate, shoeController.updateShoeOrder);
 
 module.exports = router;
