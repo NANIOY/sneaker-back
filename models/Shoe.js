@@ -33,6 +33,11 @@ const ShoeSchema = new Schema({
         type: Date,
         default: Date.now,
     },
+    status: {
+        type: String,
+        enum: ['In Production', 'Shipped', 'Delivered', 'Cancelled'],
+        default: 'In Production',
+    },
 });
 
 const Shoe = mongoose.model('Shoe', ShoeSchema);
