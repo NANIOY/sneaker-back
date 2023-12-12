@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../../../controllers/api/v1/userController');
 const authenticate = require('../../../middlewares/authenticate');
+const { createUserLimiter } = require('../../../middlewares/rateLimiters');
 
-// POST new user
-router.post('/', userController.createUser);
+// POST new user (rate limited)
+router.post('/', createUserLimiter, userController.createUser);
 
 // GET all users
 router.get('/', userController.getAllUsers);
