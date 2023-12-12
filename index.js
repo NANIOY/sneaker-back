@@ -18,10 +18,13 @@ db.on('error', console.error.bind(console, 'connection error:'));
 
 const shoeRoutes = require('./routes/api/v1/shoes');
 const userRoutes = require('./routes/api/v1/users');
+const authRoutes = require('./routes/api/v1/auth');
+
 app.use(express.json());
 
 app.use('/api/v1/shoes', shoeRoutes);
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/auth', authRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
