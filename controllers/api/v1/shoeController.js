@@ -102,6 +102,14 @@ const deleteShoeOrder = async (req, res) => {
     try {
         const { id } = req.params;
 
+        // check if the user is an admin
+        if (!req.user.isAdmin) {
+            return res.status(403).json({
+                status: 'error',
+                message: 'Forbidden: Admin access required',
+            });
+        }
+
         // delete the shoe order
         const deletedShoe = await Shoe.findByIdAndDelete(id);
 
