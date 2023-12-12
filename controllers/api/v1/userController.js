@@ -58,8 +58,38 @@ const deleteUser = async (req, res) => {
     }
 };
 
+const updatePassword = async (req, res) => {
+    try {
+        const { userId } = req.user;
+        const { currentPassword, newPassword } = req.body;
+
+        // fetch the user by id
+        const user = await User.findById(userId);
+
+        // check if the current password is valid
+        const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
+
+        if (!isPasswordValid) {
+            return res.status(401).json({ message: 'Invalid current password' });
+        }
+
+        // hash and update the new password
+        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+        user.password = hashedNewPassword;
+
+        // save the updated user
+        await user.save();
+
+        res.json({ message: 'Password updated successfully' });
+    } catch (error) {
+        console.error('Error updating password:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
 module.exports = {
     createUser,
     getAllUsers,
     deleteUser,
+    updatePassword,
 };

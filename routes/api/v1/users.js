@@ -12,4 +12,8 @@ router.get('/', userController.getAllUsers);
 // delete user (admin only)
 router.delete('/:userId', authenticate, userController.deleteUser);
 
+// update user password
+router.patch('/password', authenticate, userController.updatePassword);
+router.put('/password', authenticate, userController.updatePassword);
+
 module.exports = router;
