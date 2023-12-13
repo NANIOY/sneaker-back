@@ -7,7 +7,7 @@ Welcome to the API documentation for the Sneaker API. This document provides det
 ## Base URL
 
 All API requests should be made to the following base URL:
-``https://sneaker-back.onrender.com``
+``https://sneaker-back.onrender.com/api/v1/``
 
 
 ## Endpoints
