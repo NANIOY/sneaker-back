@@ -8,7 +8,7 @@ const { createShoeLimiter } = require('../../../middlewares/rateLimiters');
 router.get('/', shoeController.getShoeOrders);
 
 // POST a new shoe order (rate limited)
-router.post('/', createShoeLimiter, shoeController.createShoeOrder);
+router.post('/', /*createShoeLimiter,*/ shoeController.createShoeOrder);
 
 // GET a shoe order by id
 router.get('/:id', shoeController.getShoeById);
