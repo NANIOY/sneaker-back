@@ -28,24 +28,44 @@ const getShoeOrders = async (req, res) => {
 const createShoeOrder = async (req, res) => {
     try {
         const {
-            color,
-            size,
-            lacesColor,
-            soleColor,
-            logoColor,
-            pattern,
-            contactInfo
+            shoeType,
+            shoeSize,
+            shoeColorSole,
+            shoeColorLaces,
+            shoeColorPanelDown,
+            shoeColorPanelUp,
+            shoeMaterialPanelDown,
+            shoeMaterialPanelUp,
+            jewel,
+            initials,
+            status,
+            userName,
+            userAddress,
+            userEmail,
+            colorOptions,
+            selectedColors,
+            selectedMaterials,
         } = req.body;
 
         // create a new shoe order with provided data
         const newShoeOrder = new Shoe({
-            color,
-            size,
-            lacesColor,
-            soleColor,
-            logoColor,
-            pattern,
-            contactInfo
+            shoeType,
+            shoeSize,
+            shoeColorSole,
+            shoeColorLaces,
+            shoeColorPanelDown,
+            shoeColorPanelUp,
+            shoeMaterialPanelDown,
+            shoeMaterialPanelUp,
+            jewel,
+            initials,
+            status,
+            userName,
+            userAddress,
+            userEmail,
+            colorOptions,
+            selectedColors,
+            selectedMaterials,
         });
 
         // save the shoe order to the database
