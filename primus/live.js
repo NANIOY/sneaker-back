@@ -1,17 +1,18 @@
+// Import the required modules
+const Primus = require("primus");
+const { createShoeOrder } = require('../controllers/api/v1/shoeController');
+
 module.exports.go = (server) => {
-    const Primus = require("primus");
+    // Create a new Primus instance
     const primus = new Primus(server, {
         transformer: "websockets",
     });
 
-    // check if connection, then console.log
+    // Handle incoming WebSocket connections
     primus.on('connection', (spark) => {
         console.log('connected ༼ つ ◕_◕ ༽つ');
 
-        const app = require('../index');
-        const { createShoeOrder } = require('../controllers/api/v1/shoeController');
-
-        // check if data, then console.log
+        // Handle incoming data from clients
         spark.on('data', async (data) => {
             console.log("data (❁´◡`❁)", data);
 
