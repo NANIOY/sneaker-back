@@ -4,43 +4,43 @@ const Schema = mongoose.Schema;
 const ShoeSchema = new Schema({
     shoeType: {
         type: String,
-        required: true,
+        required: false,
     },
     shoeSize: {
         type: Number, // Keep it as a single number
-        required: true,
+        required: false,
     },
     shoeColorSole: {
         type: String,
-        required: true,
+        required: false,
     },
     shoeColorLaces: {
         type: String,
-        required: true,
+        required: false,
     },
     shoeColorPanelDown: {
         type: String,
-        required: true,
+        required: false,
     },
     shoeColorPanelUp: {
         type: String,
-        required: true,
+        required: false,
     },
     shoeMaterialPanelDown: {
         type: String,
-        required: true,
+        required: false,
     },
     shoeMaterialPanelUp: {
         type: String,
-        required: true,
+        required: false,
     },
     jewel: {
         type: String,
-        required: true,
+        required: false,
     },
     initials: {
         type: String,
-        required: true,
+        required: false,
     },
     status: {
         type: String,
@@ -49,27 +49,27 @@ const ShoeSchema = new Schema({
     },
     userName: {
         type: String,
-        required: true,
+        required: false,
     },
     userAddress: {
         type: String,
-        required: true,
+        required: false,
     },
     userEmail: {
         type: String,
-        required: true,
+        required: false,
     },
     colorOptions: {
         type: [String],
-        required: true,
+        required: false,
     },
     selectedColors: {
         type: [String],
-        required: true,
+        required: false,
     },
     selectedMaterials: {
         type: [String],
-        required: true,
+        required: false,
     },
     createdAt: {
         type: Date,
