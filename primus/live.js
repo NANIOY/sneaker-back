@@ -9,17 +9,24 @@ module.exports.go = (server) => {
         console.log('connected ༼ つ ◕_◕ ༽つ');
 
         const app = require('../index');
-        const handleNewOrder = require('../controllers/api/v1/shoeController');
-
-        // call the function to setup new order handling
-        handleNewOrder(app, primus);
+        const { createShoeOrder } = require('../controllers/api/v1/shoeController');
 
         // check if data, then console.log
-        spark.on('data', (data) => {
+        spark.on('data', async (data) => {
             console.log("data (❁´◡`❁)", data);
 
-            // send data back to all clients
-            primus.write(data);
+            try {
+                // call function to create new order
+                const newOrder = await createShoeOrder(data);
+
+                // send new order to all connected clients
+                primus.write({
+                    type: 'new_order',
+                    data: newOrder.data.shoeOrders,
+                });
+            } catch (error) {
+                console.error('Error creating new order:', error);
+            }
         });
     });
 };
