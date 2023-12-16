@@ -1,20 +1,27 @@
-module.exports.go = (server) => {
-    const Primus = require("primus");
-    const primus = new Primus(server, {
-        transformer: "websockets",
+// primus/live.js
+const Primus = require('primus');
+
+function initialize(server) {
+  const primus = new Primus(server, {
+    transformer: 'websockets',
+  });
+
+  primus.on('connection', (spark) => {
+    console.log('connected ༼ つ ◕_◕ ༽つ');
+
+    spark.on('data', (data) => {
+        console.log('data (❁´◡`❁)', data);
+        primus.write(data); // Broadcast data to all connected clients
+
+        // Enhance logging to include content of data being sent
+        console.log('Data sent through WebSocket:', data);
     });
+});
 
-    // Handle incoming WebSocket connections
-    primus.on('connection', (spark) => {
-        console.log('connected ༼ つ ◕_◕ ༽つ');
 
-        // Handle incoming data from clients
-        spark.on('data', (data) => {
-            console.log("data (❁´◡`❁)", data);
+  return primus;
+}
 
-            // Broadcast data to all connected clients
-            primus.write(data); // all
-            // spark.write(data); // one
-        });
-    });
+module.exports = {
+  initialize,
 };

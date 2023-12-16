@@ -30,6 +30,16 @@ const createShoeOrder = async (req, res) => {
     try {
         const newShoeOrder = new Shoe(req.body.shoe);
         await newShoeOrder.save();
+
+        // Emit WebSocket message to all connected clients
+        req.app.locals.primus.write({
+            status: 'success',
+            message: 'Shoe order created successfully',
+            data: {
+                shoeOrder: newShoeOrder,
+            },
+        });
+
         res.status(201).json({
             status: 'success',
             message: 'Shoe order created successfully',
@@ -45,6 +55,7 @@ const createShoeOrder = async (req, res) => {
         });
     }
 };
+
 
 // get a shoe order by id
 const getShoeById = async (req, res) => {

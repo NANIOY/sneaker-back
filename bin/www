@@ -20,8 +20,7 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-require('../primus/live.js').go(server);
-
+const primus = require('../primus/live').initialize(server);
 /**
  * Listen on provided port, on all network interfaces.
  */
@@ -89,3 +88,5 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+app.locals.primus = primus;
