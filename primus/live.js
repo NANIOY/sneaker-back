@@ -22,7 +22,7 @@ module.exports.go = (server) => {
                 // send new order to all connected clients
                 primus.write({
                     type: 'new_order',
-                    data: newOrder.data.shoeOrders,
+                    data: newOrder.data.shoeOrder,
                 });
             } catch (error) {
                 console.error('Error creating new order:', error);
