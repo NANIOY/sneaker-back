@@ -1,9 +1,5 @@
-// Import the required modules
-const Primus = require("primus");
-const { createShoeOrder } = require('../controllers/api/v1/shoeController');
-
 module.exports.go = (server) => {
-    // Create a new Primus instance
+    const Primus = require("primus");
     const primus = new Primus(server, {
         transformer: "websockets",
     });
@@ -13,21 +9,12 @@ module.exports.go = (server) => {
         console.log('connected ༼ つ ◕_◕ ༽つ');
 
         // Handle incoming data from clients
-        spark.on('data', async (data) => {
+        spark.on('data', (data) => {
             console.log("data (❁´◡`❁)", data);
 
-            try {
-                // call function to create new order
-                const newOrder = await createShoeOrder(data);
-
-                // send new order to all connected clients
-                primus.write({
-                    type: 'new_order',
-                    data: newOrder.data.shoeOrder,
-                });
-            } catch (error) {
-                console.error('Error creating new order:', error);
-            }
+            // Broadcast data to all connected clients
+            primus.write(data); // all
+            // spark.write(data); // one
         });
     });
 };
