@@ -25,7 +25,7 @@ const getShoeOrders = async (req, res) => {
 
 
 // create a new shoe order
-const createShoeOrder = async (data) => {
+const createShoeOrder = async (req, res) => {
     try {
         const {
             shoeType,
@@ -45,7 +45,7 @@ const createShoeOrder = async (data) => {
             colorOptions,
             selectedColors,
             selectedMaterials,
-        } = data;
+        } = req.body;
 
         // create a new shoe order with provided data
         const newShoeOrder = new Shoe({
@@ -71,11 +71,16 @@ const createShoeOrder = async (data) => {
         // save the shoe order to the database
         const savedShoeOrder = await newShoeOrder.save();
 
-        // Return the created shoe order
-        return savedShoeOrder;
+        res.status(201).json({
+            status: 'success',
+            message: 'Shoe order created successfully',
+            data: {
+                shoeOrder: savedShoeOrder,
+            },
+        });
     } catch (error) {
-        console.error('Error creating new order:', error);
-        throw error;
+        console.error(error);
+        res.status(500).json({ status: 'error', message: 'Internal Server Error' });
     }
 };
 
