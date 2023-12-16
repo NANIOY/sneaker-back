@@ -7,7 +7,7 @@ const ShoeSchema = new Schema({
         required: true,
     },
     shoeSize: {
-        type: Number,
+        type: Number, // Keep it as a single number
         required: true,
     },
     shoeColorSole: {
@@ -60,15 +60,15 @@ const ShoeSchema = new Schema({
         required: true,
     },
     colorOptions: {
-        type: String,
+        type: [String],
         required: true,
     },
     selectedColors: {
-        type: String,
+        type: [String],
         required: true,
     },
     selectedMaterials: {
-        type: String,
+        type: [String],
         required: true,
     },
     createdAt: {

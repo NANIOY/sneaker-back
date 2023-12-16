@@ -26,6 +26,7 @@ const getShoeOrders = async (req, res) => {
 
 // create a new shoe order
 const createShoeOrder = async (req, res) => {
+    console.log('Request Body:', req.body);
     try {
         const {
             shoeType,
