@@ -7,7 +7,7 @@ const ShoeSchema = new Schema({
         required: false,
     },
     shoeSize: {
-        type: Number, // Keep it as a single number
+        type: String,
         required: false,
     },
     shoeColorSole: {
@@ -44,8 +44,7 @@ const ShoeSchema = new Schema({
     },
     status: {
         type: String,
-        enum: ['Order placed', 'In Production', 'Shipped', 'Delivered', 'Cancelled'],
-        default: 'Order placed',
+        required: false,
     },
     userName: {
         type: String,

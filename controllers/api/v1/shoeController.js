@@ -28,60 +28,21 @@ const getShoeOrders = async (req, res) => {
 const createShoeOrder = async (req, res) => {
     console.log('Request Body:', req.body);
     try {
-        const {
-            shoeType,
-            shoeSize,
-            shoeColorSole,
-            shoeColorLaces,
-            shoeColorPanelDown,
-            shoeColorPanelUp,
-            shoeMaterialPanelDown,
-            shoeMaterialPanelUp,
-            jewel,
-            initials,
-            status,
-            userName,
-            userAddress,
-            userEmail,
-            colorOptions,
-            selectedColors,
-            selectedMaterials,
-        } = req.body;
-
-        // create a new shoe order with provided data
-        const newShoeOrder = new Shoe({
-            shoeType,
-            shoeSize,
-            shoeColorSole,
-            shoeColorLaces,
-            shoeColorPanelDown,
-            shoeColorPanelUp,
-            shoeMaterialPanelDown,
-            shoeMaterialPanelUp,
-            jewel,
-            initials,
-            status,
-            userName,
-            userAddress,
-            userEmail,
-            colorOptions,
-            selectedColors,
-            selectedMaterials,
-        });
-
-        // save the shoe order to the database
-        const savedShoeOrder = await newShoeOrder.save();
-
+        const newShoeOrder = new Shoe(req.body.shoe);
+        await newShoeOrder.save();
         res.status(201).json({
             status: 'success',
             message: 'Shoe order created successfully',
             data: {
-                shoeOrder: savedShoeOrder,
+                shoeOrder: newShoeOrder,
             },
         });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ status: 'error', message: 'Internal Server Error' });
+        console.error('Error saving shoe order:', error);
+        res.status(500).json({
+            status: 'error',
+            message: 'Internal server error',
+        });
     }
 };
 
