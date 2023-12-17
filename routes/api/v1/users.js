@@ -11,17 +11,17 @@ router.post('/', /*createUserLimiter,*/ userController.createUser);
 router.get('/', userController.getAllUsers);
 
 // DELETE user (admin only)
-router.delete('/:userId', /*authenticate,*/ userController.deleteUser);
+router.delete('/:userId', authenticate, userController.deleteUser);
 
 // PUT/PATCH user password
-router.patch('/password', /*authenticate,*/ userController.updatePassword);
-router.put('/password', /*authenticate,*/ userController.updatePassword);
+router.patch('/password', authenticate, userController.updatePassword);
+router.put('/password', authenticate, userController.updatePassword);
 
 // PUT/PATCH user details
-router.patch('/info', /*authenticate,*/ userController.updateUser);
-router.put('/info', /*authenticate,*/ userController.updateUser);
+router.patch('/info', authenticate, userController.updateUser);
+router.put('/info', authenticate, userController.updateUser);
 
 // GET user details
-router.get('/profile', /*authenticate,*/ userController.getUser);
+router.get('/profile', authenticate, userController.getUser);
 
 module.exports = router;
