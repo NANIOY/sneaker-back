@@ -31,7 +31,7 @@ const createShoeOrder = async (req, res) => {
         const newShoeOrder = new Shoe(req.body.shoe);
         await newShoeOrder.save();
 
-        // Emit WebSocket message to all connected clients
+        // emit WebSocket message to all connected clients
         req.app.locals.primus.write({
             status: 'success',
             message: 'Shoe order created successfully',
@@ -165,7 +165,16 @@ const updateShoeOrder = async (req, res) => {
                 status: 'error',
                 message: 'Shoe not found',
             });
-        }
+        };
+
+        // emit WebSocket message to all connected clients
+        req.app.locals.primus.write({
+            status: 'success',
+            message: 'Shoe order details updated successfully',
+            data: {
+                updatedShoe,
+            },
+        });
 
         res.json({
             status: 'success',
