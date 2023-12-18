@@ -113,9 +113,21 @@ const deleteShoeOrder = async (req, res) => {
             });
         }
 
+        // emit WebSocket message to all connected clients
+        req.app.locals.primus.write({
+            status: 'success',
+            message: 'Shoe order deleted successfully',
+            data: {
+                deletedShoe,
+            },
+        });
+
         res.json({
             status: 'success',
             message: 'Shoe order deleted successfully',
+            data: {
+                deletedShoe,
+            },
         });
     } catch (error) {
         console.error(error);
