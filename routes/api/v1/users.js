@@ -5,7 +5,7 @@ const authenticate = require('../../../middlewares/authenticate');
 const { createUserLimiter } = require('../../../middlewares/rateLimiters');
 
 // POST new user (rate limited)
-router.post('/', /*createUserLimiter,*/ userController.createUser);
+router.post('/', createUserLimiter, userController.createUser);
 
 // GET all users
 router.get('/', userController.getAllUsers);

@@ -143,13 +143,12 @@ const updateShoeOrder = async (req, res) => {
     try {
         const { id } = req.params;
 
-        // Temporary: Commenting out authentication checks for testing
-        // if (!req.user || !req.user.isAdmin) {
-        //     return res.status(403).json({
-        //         status: 'error',
-        //         message: 'Forbidden: Admin access required',
-        //     });
-        // }
+        if (!req.user || !req.user.isAdmin) {
+            return res.status(403).json({
+                status: 'error',
+                message: 'Forbidden: Admin access required',
+            });
+        }
 
         const updates = req.body;
 

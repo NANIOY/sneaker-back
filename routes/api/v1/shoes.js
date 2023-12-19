@@ -8,7 +8,7 @@ const { createShoeLimiter } = require('../../../middlewares/rateLimiters');
 router.get('/', shoeController.getShoeOrders);
 
 // POST a new shoe order (rate limited)
-router.post('/', /*createShoeLimiter,*/ shoeController.createShoeOrder);
+router.post('/', createShoeLimiter, shoeController.createShoeOrder);
 
 // GET a shoe order by id
 router.get('/:id', shoeController.getShoeById);
@@ -17,7 +17,7 @@ router.get('/:id', shoeController.getShoeById);
 router.delete('/:id', authenticate, shoeController.deleteShoeOrder);
 
 // PUT/PATCH a shoe order by id (admin access required)
-router.put('/:id', /*authenticate,*/ shoeController.updateShoeOrder);
-router.patch('/:id', /*authenticate,*/ shoeController.updateShoeOrder);
+router.put('/:id', authenticate, shoeController.updateShoeOrder);
+router.patch('/:id', authenticate, shoeController.updateShoeOrder);
 
 module.exports = router;
